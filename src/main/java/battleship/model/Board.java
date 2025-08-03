@@ -43,7 +43,7 @@ public class Board {
         return new AttackResult(false, null, false);
     }
 
-    private boolean allSunk() {
+    public boolean allSunk() {
         return ships.stream().allMatch(Ship::isSunk);
     }
 
