@@ -17,22 +17,22 @@ public class BoardTest {
     @Test   
     public void testValidPlaceShip(){
         Coordinate start = new Coordinate(0, 0);
-        Assertions.assertTrue(board.placeShip(start, 3, true));
+        Assertions.assertTrue(board.placeShip(start, 3, true, "teste"));
     }
     @Test   
     public void testInvalidPlaceShipOne(){
         Coordinate start = new Coordinate(-1, 0);
-        Assertions.assertFalse(board.placeShip(start, 3, true));
+        Assertions.assertFalse(board.placeShip(start, 3, true, "teste"));
     }
     @Test   
     public void testInvalidPlaceShipTwo(){
         Coordinate start = new Coordinate(0, -1);
-        Assertions.assertFalse(board.placeShip(start, 3, true));
+        Assertions.assertFalse(board.placeShip(start, 3, true, "teste"));
     }
     @Test 
     public void testAttackResultHit(){
         Coordinate start = new Coordinate(0, 0);
-        board.placeShip(start, 3, true);
+        board.placeShip(start, 3, true, "teste");
         Coordinate attack = new Coordinate(0, 0);
         Board.AttackResult result = board.attack(attack);
         Assertions.assertTrue(result.isHit());
@@ -40,7 +40,7 @@ public class BoardTest {
     @Test 
     public void testAttackResultMiss(){
         Coordinate start = new Coordinate(0, 0);
-        board.placeShip(start, 3, true);
+        board.placeShip(start, 3, true, "teste");
         Coordinate attack = new Coordinate(0, 1);
         Board.AttackResult result = board.attack(attack);
         Assertions.assertFalse(result.isHit());

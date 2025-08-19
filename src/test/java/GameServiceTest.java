@@ -20,18 +20,18 @@ public class GameServiceTest {
         gameService = new GameService();
         gameService.init(10);
         playerBoard = new Board(10);
-        playerBoard.placeShip(new Coordinate(5, 7), 3, true);
+        playerBoard.placeShip(new Coordinate(5, 7), 3, true, "teste");
         computerBoard = new Board(10);
-        computerBoard.placeShip(new Coordinate(5, 7), 3, true);
+        computerBoard.placeShip(new Coordinate(5, 7), 3, true, "teste");
     }
     
     @Test
     public void testPlacePlayerShipsTrue() {
-        Assertions.assertTrue(gameService.placePlayerShip(5, 7, 3, true));
+        Assertions.assertTrue(gameService.placePlayerShip(5, 7, 3, true, "teste"));
     }
     @Test
     public void testPlacePlayerShipsFalse() {
-        Assertions.assertFalse(gameService.placePlayerShip(11, 7, 3, true));
+        Assertions.assertFalse(gameService.placePlayerShip(11, 7, 3, true, "teste"));
     }
     @Test
     public void testPlayerAttackHit() {

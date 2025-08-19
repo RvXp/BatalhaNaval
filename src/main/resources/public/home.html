@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batalha Naval</title>
+    <link rel="stylesheet" href="styleHome.css">
+</head>
+<body>
+    <!-- Tela Principal/Menu -->
+    <div id="main-screen" class="screen">
+        <div class="header">
+            <h1>🚢 Batalha Naval</h1>
+            <div class="player-info">
+                <span id="player-name">Jogador</span>
+                <div class="online-indicator"></div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="left-panel">
+                <div class="action-buttons">
+                    <button id="new-game-btn" class="primary-btn">
+                        <span class="icon">⚔️</span>
+                        Nova Partida Online
+                    </button>
+                    <button id="new-game-btn" class="primary-computer-btn">
+                        <span class="icon">💻</span>
+                        Nova Partida Vs Computador
+                    </button>
+                    <button id="send-invite-btn" class="secondary-btn">
+                        <span class="icon">📧</span>
+                        Enviar Convite
+                    </button>
+                </div>
+
+                <div class="friends-section">
+                    <h3>Amigos Online <span id="online-count" class="badge">0</span></h3>
+                    <div id="friends-list" class="friends-list">
+                        <!-- Lista será populada dinamicamente -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <div class="invites-section">
+                    <h3>Convites <span id="invites-count" class="badge">0</span></h3>
+                    <div id="invites-list" class="invites-list">
+                        <!-- Convites serão populados dinamicamente -->
+                    </div>
+                </div>
+
+                <div class="notifications-section">
+                    <h3>Notificações</h3>
+                    <div id="notifications" class="notifications">
+                        <!-- Notificações serão adicionadas aqui -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

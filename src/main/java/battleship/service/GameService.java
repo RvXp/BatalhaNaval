@@ -17,21 +17,24 @@ public class GameService {
         playerBoard = new Board(size);
         computerBoard = new Board(size);
         int[] lengths = {2,3,3,4,5};
-        for (int len : lengths) {
+        String[] names = {"destroyer", "submarine", "cruiser", "battleship", "carrier"};
+        for (int i = 0; i < lengths.length; i++) {
+            int len = lengths[i];
+            String name = names[i]; // Atribui nome baseado no índice
             boolean placed = false;
             while (!placed) {
                 int r = random.nextInt(size), c = random.nextInt(size);
                 boolean v = random.nextBoolean();
                 placed = computerBoard.placeShip(
-                        new Coordinate(r, c), len, v
+                        new Coordinate(r, c), len, v, name // Passe o nome para placeShip
                 );
             }
         }
     }
 
-    public boolean placePlayerShip(int row, int col, int length, boolean vertical) {
+    public boolean placePlayerShip(int row, int col, int length, boolean vertical, String name) {
         return playerBoard.placeShip(
-                new Coordinate(row, col), length, vertical
+                new Coordinate(row, col), length, vertical, name
         );
     }
 

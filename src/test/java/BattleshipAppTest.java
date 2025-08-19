@@ -19,7 +19,7 @@ public class BattleshipAppTest {
     @Test
     public void testPlacePlayerShip() {
         service.init(10);
-        boolean result = service.placePlayerShip(5, 7, 3, true);
+        boolean result = service.placePlayerShip(5, 7, 3, true, "teste");
         assertTrue(result);
     }
 
