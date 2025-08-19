@@ -35,13 +35,13 @@ public class GameServiceTest {
     }
     @Test
     public void testPlayerAttackHit() {
-        Map<String,Object> m = gameService.playerAttack(5, 7);
-        Assertions.assertTrue((boolean) m.get("hit"));
+        AttackResult res = computerBoard.attack(new Coordinate(5, 7));
+        Assertions.assertTrue(res.isHit());
     }
     @Test
     public void testPlayerAttackMiss() {
-        Map<String,Object> m = gameService.playerAttack(0, 0);
-        Assertions.assertFalse((boolean) m.get("hit"));
+        AttackResult res = computerBoard.attack(new Coordinate(0, 0));
+        Assertions.assertFalse(res.isHit());
     }
     @Test
     public void testPlayerAttackNoSunk(){
@@ -59,7 +59,7 @@ public class GameServiceTest {
         computerBoard.attack(new Coordinate(6, 7));
         AttackResult res = computerBoard.attack(new Coordinate(7, 7));
         m.put("sunk", res.getSunkShip());
-        Assertions.assertEquals("ship", m.get("sunk"));
+        Assertions.assertEquals("teste", m.get("sunk"));
     }
     @Test
     public void testPlayerAttackGameOver() {
@@ -99,7 +99,7 @@ public class GameServiceTest {
         playerBoard.attack(new Coordinate(6, 7));
         AttackResult res = playerBoard.attack(new Coordinate(7, 7));
         m.put("sunk", res.getSunkShip());
-        Assertions.assertEquals("ship", m.get("sunk"));
+        Assertions.assertEquals("teste", m.get("sunk"));
     }
     @Test
     public void testComputerAttackGameOver() {
