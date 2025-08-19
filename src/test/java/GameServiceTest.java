@@ -34,7 +34,7 @@ public class GameServiceTest {
     }
     @Test
     public void testPlayerAttackHit() {
-        Map<String,Object> m = gameService.playerAttack(11, 7);
+        Map<String,Object> m = gameService.playerAttack(5, 7);
         Assertions.assertTrue((boolean) m.get("hit"));
     }
     @Test
