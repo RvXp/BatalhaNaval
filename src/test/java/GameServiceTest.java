@@ -32,11 +32,11 @@ public class GameServiceTest {
     public void testPlacePlayerShipsFalse() {
         Assertions.assertFalse(gameService.placePlayerShip(11, 7, 3, true));
     }
-    // @Test
-    // public void testPlayerAttackHit() {
-    //     Map<String,Object> m = gameService.playerAttack(11, 7);
-    //     Assertions.assertTrue((boolean) m.get("hit"));
-    // }
+    @Test
+    public void testPlayerAttackHit() {
+        Map<String,Object> m = gameService.playerAttack(11, 7);
+        Assertions.assertTrue((boolean) m.get("hit"));
+    }
     @Test
     public void testPlayerAttackMiss() {
         Map<String,Object> m = gameService.playerAttack(0, 0);
