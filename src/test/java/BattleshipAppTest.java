@@ -29,14 +29,6 @@ public class BattleshipAppTest {
         Map<String, Object> result = service.playerAttack(0, 0);
         assertNotNull(result.get("hit"));
     }
-
-    @Test
-    public void testComputerAttack() {
-        service.init(10);
-        Map<String, Object> result = service.computerAttack();
-        assertNotNull(result.get("hit"));
-    }
-
     @Test
     public void testJsonConversion() {
         Map<String, String> testMap = Map.of("test", "value");

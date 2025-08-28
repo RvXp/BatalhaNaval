@@ -57,6 +57,7 @@ public class Board {
         return ships.stream().allMatch(Ship::isSunk);
     }
 
+    
     public static class AttackResult {
         private final boolean hit;
         private final String sunkShip;
