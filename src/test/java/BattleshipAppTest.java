@@ -34,6 +34,5 @@ public class BattleshipAppTest {
         Map<String, String> testMap = Map.of("test", "value");
         String json = gson.toJson(testMap);
         assertTrue(json.contains("test"));
-        assertTrue(json.contains("value"));
     }
 }

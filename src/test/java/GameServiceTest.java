@@ -22,9 +22,9 @@ public class GameServiceTest {
         gameService.init(10);
         Coordinate coordinate = new Coordinate(5, 7);
         playerBoard = new Board(10);
-        playerBoard.placeShip(coordinate, 3, true, "teste");
+        playerBoard.placeShip(new Coordinate(5, 7), 3, true);
         computerBoard = new Board(10);
-        computerBoard.placeShip(coordinate, 3, true, "teste");
+        computerBoard.placeShip(new Coordinate(5, 7), 3, true);
     }
     
     @Test
@@ -44,8 +44,8 @@ public class GameServiceTest {
         
     @Test
     public void testPlayerAttackMiss() {
-        AttackResult res = computerBoard.attack(new Coordinate(11, 7));
-        Assertions.assertFalse(res.isHit());
+        Map<String,Object> m = gameService.playerAttack(0, 0);
+        Assertions.assertFalse((boolean) m.get("hit"));
     }
     @Test
     public void testPlayerAttackNoSunk(){

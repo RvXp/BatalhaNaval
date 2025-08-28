@@ -48,7 +48,7 @@ public class GameService {
         String[] names = {"destroyer", "submarine", "cruiser", "battleship", "carrier"};
         for (int i = 0; i < lengths.length; i++) {
             int len = lengths[i];
-            String name = names[i]; 
+            String name = names[i];
             boolean placed = false;
             while (!placed) {
                 int r = random.nextInt(size), c = random.nextInt(size);
