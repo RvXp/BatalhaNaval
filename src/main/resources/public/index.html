@@ -7,20 +7,76 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div id="game-info">
-    <p>Turn: <span id="turn-display"></span></p>
-    <p>Info: <span id="info"></span></p>
+
+<div class="header">
+    <h2>🔥 Batalha em Andamento</h2>
+    <div class="battle-info">
+        <div class="turn-info">
+            <span>Turno: <span id="turn-display"></span></span>
+        </div>
+        <div class="players-info">
+            <span id="player-vs-opponent">Você vs Computador</span>
+        </div>
+    </div>
 </div>
+
 <div id="gamesboard-container"></div>
-<div class="option-container">
+<!-- <div class="option-container">
     <div id="0" class="destroyer-preview destroyer" draggable="true"></div>
     <div id="1" class="submarine-preview submarine" draggable="true"></div>
     <div id="2" class="cruiser-preview cruiser" draggable="true"></div>
     <div id="3" class="battleship-preview battleship" draggable="true"></div>
     <div id="4" class="carrier-preview carrier" draggable="true"></div>
+</div> -->
+
+<div class="ships-section">
+    <h3>Navios Disponíveis</h3>
+    <div class="ships-info">
+        <p>Arraste os navios para o tabuleiro</p>
+        <p class="warning" id="placement-warning"></p>
+    </div>
+    
+    <div class="option-container">
+        <div class="ship-item">
+            <div id="0" class="destroyer-preview destroyer ship-preview" draggable="true">🚢🚢</div>
+            <span class="ship-name">Destroyer (2)</span>
+        </div>
+        <div class="ship-item">
+            <div id="1" class="submarine-preview submarine ship-preview" draggable="true">🚢🚢🚢</div>
+            <span class="ship-name">Submarine (3)</span>
+        </div>
+        <div class="ship-item">
+            <div id="2" class="cruiser-preview cruiser ship-preview" draggable="true">🚢🚢🚢</div>
+            <span class="ship-name">Cruiser (3)</span>
+        </div>
+        <div class="ship-item">
+            <div id="3" class="battleship-preview battleship ship-preview" draggable="true">🚢🚢🚢🚢</div>
+            <span class="ship-name">Battleship (4)</span>
+        </div>
+        <div class="ship-item">
+            <div id="4" class="carrier-preview carrier ship-preview" draggable="true">🚢🚢🚢🚢🚢</div>
+            <span class="ship-name">Carrier (5)</span>
+        </div>
+    </div>
+
+    <div class="setup-controls">
+        <button id="flip-button" class="secondary-btn">
+            <span class="icon">🔄</span>
+            Girar Navio
+        </button>
+        <button id="start-button" class="primary-btn">
+            <span class="icon">⚔️</span>
+            Iniciar Batalha
+        </button>
+    </div>
 </div>
-<button id="flip-button">FLIP</button>
-<button id="start-button">START</button>
+
+<div class="battle-status">
+    <div class="status-info">
+        <p id="battle-info">Seu turno - Clique em uma posição no tabuleiro inimigo</p>
+    </div>
+</div>
+
 <script src="app.js"></script>
 </body>
 </html>

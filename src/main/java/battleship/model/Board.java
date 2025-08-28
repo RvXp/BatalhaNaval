@@ -15,15 +15,25 @@ public class Board {
     public int getSize() { return size; }
     public List<Coordinate> getShots() { return shots; }
 
-    public boolean placeShip(Coordinate start, int length, boolean vertical) {
-        Ship ship = new Ship("ship", start, length, vertical);
-        for (Coordinate pos : ship.getPositions()) {
-            if (pos.getRow() < 0 || pos.getRow() >= size
-                    || pos.getCol() < 0 || pos.getCol() >= size)
-                return false;
-            for (Ship s : ships)
-                if (s.occupies(pos)) return false;
+    public boolean placeShip(Coordinate start, int length, boolean vertical, String name) {
+        // comcerta se o navio ultrapassa a borda do tabuleiro
+        if (vertical) {
+            if (start.getRow() + length > size) return false;
+        } else {
+            if (start.getCol() + length > size) return false;
         }
+
+        Ship ship = new Ship(name, start, length, vertical);
+
+        for (Coordinate pos : ship.getPositions()) {
+            if (pos.getRow() < 0 || pos.getRow() >= size || pos.getCol() < 0 || pos.getCol() >= size)
+                return false;
+
+            for (Ship s : ships) {
+                if (s.occupies(pos)) return false;
+            }
+        }
+
         ships.add(ship);
         return true;
     }

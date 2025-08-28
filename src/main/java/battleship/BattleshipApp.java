@@ -30,17 +30,20 @@ public class BattleshipApp {
         }, gson::toJson);
 
         // posiciona um navio do jogador
+        // posiciona um navio do jogador
         post("/api/place", (req, res) -> {
             Map<?,?> body = gson.fromJson(req.body(), Map.class);
             boolean ok = service.placePlayerShip(
                     ((Double) body.get("row")).intValue(),
                     ((Double) body.get("col")).intValue(),
                     ((Double) body.get("length")).intValue(),
-                    (Boolean) body.get("vertical")
+                    (Boolean) body.get("vertical"),
+                    (String) body.get("name")
             );
             res.type("application/json");
             return Map.of("ok", ok);
         }, gson::toJson);
+
 
         // jogador ataca computador
         post("/api/attack", (req, res) -> {
