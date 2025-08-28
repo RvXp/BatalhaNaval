@@ -20,11 +20,12 @@ public class GameServiceTest {
     public void GameServiceSetup() {
         gameService = new GameService();
         gameService.init(10);
-        Coordinate coordinate = new Coordinate(5, 7);
+        
         playerBoard = new Board(10);
-        playerBoard.placeShip(new Coordinate(5, 7), 3, true);
+        playerBoard.placeShip(new Coordinate(5, 7), 3, true, "teste");
+        
         computerBoard = new Board(10);
-        computerBoard.placeShip(new Coordinate(5, 7), 3, true);
+        computerBoard.placeShip(new Coordinate(5, 7), 3, true, "teste");
     }
     
     @Test
