@@ -1,14 +1,14 @@
 package battleship.service;
 
-import battleship.model.Board;
-import battleship.model.Coordinate;
-import battleship.model.Board.AttackResult;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
+import battleship.model.Board;
+import battleship.model.Board.AttackResult;
+import battleship.model.Coordinate;
 
 public class GameService {
     private Board playerBoard;
@@ -31,12 +31,10 @@ public class GameService {
         return this.potentialShots;
     }
 
-
     public void init(int size) {
         playerBoard = new Board(size);
-        computerBoard = new Board(size);
 
-        lastShot = new LastShot(); 
+        lastShot = new LastShot();
         lastShot.setCoordinate(null);
         lastShot.setHit(false);
 
@@ -44,21 +42,50 @@ public class GameService {
         secondHit.setCoordinate(null);
         secondHit.setHit(false);
 
-        int[] lengths = {2,3,3,4,5};
-        String[] names = {"destroyer", "submarine", "cruiser", "battleship", "carrier"};
-        for (int i = 0; i < lengths.length; i++) {
-            int len = lengths[i];
-            String name = names[i];
-            boolean placed = false;
-            while (!placed) {
-                int r = random.nextInt(size), c = random.nextInt(size);
-                boolean v = random.nextBoolean();
-                placed = computerBoard.placeShip(
-                        new Coordinate(r, c), len, v, name 
-                );
+        int[] lengths = {5, 4, 3, 3, 2};
+        String[] names = {"carrier", "battleship", "cruiser", "submarine", "destroyer"};
+        
+        boolean allShipsPlaced = false;
+        int boardSetupAttempts = 0;
+
+        // Configura o tabuleiro até ter sucesso
+        do {
+            computerBoard = new Board(size); // Limpa e cria um novo tabuleiro a cada tentativa
+            boardSetupAttempts++;
+            if (boardSetupAttempts > 100) { 
+                System.err.println("NÃO FOI POSSÍVEL CONFIGURAR O TABULEIRO APÓS 100 TENTATIVAS!");
+                return;
             }
-        }
+
+            boolean successThisAttempt = true;
+            for (int i = 0; i < lengths.length; i++) {
+                int len = lengths[i];
+                String name = names[i];
+                boolean placed = false;
+                int placementAttempts = 0;
+                
+                while (!placed && placementAttempts < 2000) {
+                    int r = random.nextInt(size);
+                    int c = random.nextInt(size);
+                    boolean v = random.nextBoolean();
+                    placed = computerBoard.placeShip(new Coordinate(r, c), len, v, name);
+                    placementAttempts++;
+                }
+
+                // Se um navio não pôde ser colocado, esta tentativa de montar o tabuleiro falhou
+                if (!placed) {
+                    successThisAttempt = false;
+                    System.out.println("Falha ao posicionar '" + name + "'. Reiniciando a disposição do tabuleiro...");
+                    break; // Sai do 'for' e tenta o 'do-while' novamente
+                }
+            }
+            allShipsPlaced = successThisAttempt;
+
+        } while (!allShipsPlaced);
+        
+        System.out.println("Tabuleiro do computador configurado com sucesso após " + boardSetupAttempts + " tentativa(s).");
     }
+
 
     public boolean placePlayerShip(int row, int col, int length, boolean vertical, String name) {
         return playerBoard.placeShip(

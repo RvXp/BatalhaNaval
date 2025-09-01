@@ -15,6 +15,8 @@ public class Board {
     public int getSize() { return size; }
     public List<Coordinate> getShots() { return shots; }
 
+
+    
     public boolean placeShip(Coordinate start, int length, boolean vertical, String name) {
         // comcerta se o navio ultrapassa a borda do tabuleiro
         if (vertical) {
@@ -32,9 +34,40 @@ public class Board {
             for (Ship s : ships) {
                 if (s.occupies(pos)) return false;
             }
-        }
 
+            // Para cada parte do novo navio, checa se seus "vizinhos" estão livres.
+            if (!isCellSpacedCorrectly(pos)) {
+                return false;
+            }
+        }
+        
         ships.add(ship);
+        return true;
+    }
+
+    private boolean isCellSpacedCorrectly(Coordinate c) {
+        // Matriz com as 8 direções adjacentes (incluindo diagonais)
+        int[][] directions = {
+            {-1, -1}, {-1, 0}, {-1, 1},// linha superior
+            { 0, -1},          { 0, 1},// lados
+            { 1, -1}, { 1, 0}, { 1, 1}// linha inferior
+        };
+
+        for (int[] dir : directions) {
+            int newRow = c.getRow() + dir[0];
+            int newCol = c.getCol() + dir[1];
+            Coordinate neighbor = new Coordinate(newRow, newCol);
+
+            // Verifica se a coordenada vizinha está dentro do tabuleiro
+            if (newRow >= 0 && newRow < size && newCol >= 0 && newCol < size) {
+                // Verifica se algum navio já posicionado ocupa esta célula vizinha
+                for (Ship existingShip : this.ships) {
+                    if (existingShip.occupies(neighbor)) {
+                        return false;
+                    }
+                }
+            }
+        }
         return true;
     }
 

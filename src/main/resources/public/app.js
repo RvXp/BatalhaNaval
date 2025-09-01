@@ -9,7 +9,12 @@ const clearBoard           = document.getElementById('clear-board');
 const startButton          = document.getElementById('start-button');
 const infoDisplay          = document.getElementById('battle-info');
 const turnDisplay          = document.getElementById('turn-display');
+const h3Text               = document.querySelector('.ships-section h3')
+const pText               = document.querySelector('.ships-info p')
 
+
+
+const placedShipElements = {} //Para armazenar os elementos dos navios e reinserir no DOM
 let angle = 0;
 let draggedShip = null;
 let playerShips = [];
@@ -230,6 +235,10 @@ function dropShip(e) {
 
     // Armazena para enviar depois
     playerShips.push({ row, col, length: ship.length, vertical: angle !== 0, name: ship.name });
+
+    //Guarda a referência do elemento antes de remove-lo
+    placedShipElements[ship.name] = draggedShip;
+
     draggedShip.remove();
 }
 
@@ -267,6 +276,12 @@ startButton.addEventListener('click', async () => {
     turnDisplay.textContent = 'Você';
     const ComputerContainer = document.querySelector('.board-container-computer');
     ComputerContainer.classList.remove('board-container-computer');
+    startButton.style.display = 'none';
+    flipButton.style.display = 'none';
+    h3Text.textContent = 'Navios que você afundou:';
+    pText.style.display = 'none';
+    
+    
     attachAttackHandlers();
 });
 
@@ -278,6 +293,11 @@ function attachAttackHandlers() {
 
 async function handlePlayerAttack(e) {
     if (!gameStarted) return;
+
+    if (e.target.classList.contains('boom') || e.target.classList.contains('empty')) {
+        infoDisplay.textContent = 'Você já atirou nesta posição!';
+        return;
+    }
 
     const idx = Number(e.target.id);
     const row = Math.floor(idx / width);
@@ -294,7 +314,8 @@ async function handlePlayerAttack(e) {
 
     if (data.sunk) {
         infoDisplay.textContent = `Você afundou um ${data.sunk}!`;
-        console.log(`Você afundou um ${data.sunk}!`); // Opcional, se ainda quiser no console
+        reAddSunkShipToOptions(data.sunk);
+        console.log(`Você afundou um ${data.sunk}!`); 
     } else if (data.hit) {
         infoDisplay.textContent = 'Você acertou!';
     } else {
@@ -302,19 +323,49 @@ async function handlePlayerAttack(e) {
     }
 
 
-    if (data.gameOver) return infoDisplay.textContent = 'Você venceu!';
+    if (data.gameOver){
+        gameStarted = false
+        return infoDisplay.textContent = 'Você venceu!';
+    }
+    if(gameStarted){
+        // Contra-ataque do computador
+        turnDisplay.textContent = 'Computador';
+        res  = await fetch(`${API}/attack/computer`);
+        data = await res.json();
+        const compIdx    = data.row * width + data.col;
+        const playerCell = document.querySelector(`#player .block[id='${compIdx}']`);
+        playerCell.classList.add(data.hit ? 'boom' : 'empty');
+        infoDisplay.textContent = data.sunk
+            ? `Computador afundou seu ${data.sunk}!`
+            : (data.hit ? 'Computador acertou!' : 'Computador errou!');
+        if (data.gameOver){
+            gameStarted = false
+            return infoDisplay.textContent = 'Computador venceu!';
+        }
 
-    // Contra-ataque do computador
-    turnDisplay.textContent = 'Computador';
-    res  = await fetch(`${API}/attack/computer`);
-    data = await res.json();
-    const compIdx    = data.row * width + data.col;
-    const playerCell = document.querySelector(`#player .block[id='${compIdx}']`);
-    playerCell.classList.add(data.hit ? 'boom' : 'empty');
-    infoDisplay.textContent = data.sunk
-        ? `Computador afundou seu ${data.sunk}!`
-        : (data.hit ? 'Computador acertou!' : 'Computador errou!');
-    if (data.gameOver) return infoDisplay.textContent = 'Computador venceu!';
+        turnDisplay.textContent = 'Você';
+    }
 
-    turnDisplay.textContent = 'Você';
+    
+}
+
+// 8) Encontrar o elemento do navio afundado e colocá-lo na área de "Você afundou os Navios:"
+
+function reAddSunkShipToOptions(shipName) {
+    //Pega o elemento HTML que foi guardado
+    const shipElement = placedShipElements[shipName];
+    if (!shipElement) {
+        console.error(`Elemento para o navio ${shipName} não encontrado.`);
+        return;
+    }
+
+    //Encontra o elemento .ship-item do navio
+    const shipId = shipElement.id;
+    const originalContainer = document.querySelectorAll('.option-container .ship-item')[shipId];
+
+    if (originalContainer) {
+        //insere o elemento no início do seu contêiner original
+        shipElement.style.transform = 'rotate(180deg)';
+        originalContainer.prepend(shipElement);
+    }
 }

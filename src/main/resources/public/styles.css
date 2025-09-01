@@ -379,3 +379,11 @@ h3 {
 }
 
 
+.ship-sunk {
+    opacity: 0.5; /* Deixa o navio semitransparente */
+    cursor: not-allowed; /* Mostra um ícone de 'proibido' ao passar o mouse */
+    filter: grayscale(100%); /* Deixa o navio em tons de cinza */
+    background-color: rgba(255, 100, 100, 0.5); /* Adiciona um leve tom avermelhado */
+    border: 1px dashed red;
+    box-shadow: none; /* Remove qualquer sombra para parecer 'flat' */
+}
